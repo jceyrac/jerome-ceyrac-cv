@@ -2,6 +2,7 @@ import { SectionLabel, SectionWrapper } from "./SectionWrapper";
 
 interface ExperienceEntry {
   role: string;
+  date: string;
   company: string;
   meta: string;
   bullets: string[];
@@ -17,6 +18,7 @@ function parseExperience(md: string): ExperienceEntry[] {
     if (current?.role) {
       entries.push({
         role: current.role || "",
+        date: current.date || "",
         company: current.company || "",
         meta: current.meta || "",
         bullets: [...bullets],
@@ -29,14 +31,21 @@ function parseExperience(md: string): ExperienceEntry[] {
     const h3 = line.match(/^#{1,3}\s+(.+)/);
     if (h3) {
       flush();
-      current = { role: h3[1].trim() };
+      const full = h3[1].trim();
+      // Extract date after · separator, e.g. "Product Owner · Apr 2024 – Now"
+      const dotSplit = full.match(/^(.+?)\s*[·•]\s*(.+)$/);
+      if (dotSplit) {
+        current = { role: dotSplit[1].trim(), date: dotSplit[2].trim() };
+      } else {
+        current = { role: full, date: "" };
+      }
       continue;
     }
 
     const boldItalic = line.match(/^\*(.+?)\*$/);
     if (boldItalic && !current) {
       flush();
-      current = { role: boldItalic[1].trim() };
+      current = { role: boldItalic[1].trim(), date: "" };
       continue;
     }
 
@@ -93,63 +102,94 @@ export function ExperienceSection({ markdown }: ExperienceSectionProps) {
   return (
     <SectionWrapper id="experience" ocid="section.experience">
       <SectionLabel>Experience</SectionLabel>
-      <div className="relative">
-        <div className="absolute left-0 top-3 bottom-3 w-px timeline-line md:left-[11px]" />
 
-        <div className="space-y-12 pl-8 md:pl-10">
-          {entries.map((entry) => (
-            <div
-              key={`${entry.role}-${entry.company}`}
-              className="reveal relative"
-            >
+      <div className="relative">
+        {entries.map((entry, idx) => (
+          <div
+            key={`${entry.role}-${entry.company}`}
+            className="reveal relative grid grid-cols-[140px_1px_1fr] md:grid-cols-[180px_1px_1fr] gap-x-6 mb-10 last:mb-0"
+          >
+            {/* Left column — date */}
+            <div className="flex flex-col items-end justify-start pt-1 gap-1">
+              {entry.date && (
+                <>
+                  {/* Split date into parts if it contains a dash/en-dash */}
+                  {entry.date.split(/\s*[–\-]\s*/).length === 2 ? (
+                    <>
+                      <span className="font-mono text-xs text-primary font-semibold text-right leading-tight">
+                        {entry.date.split(/\s*[–\-]\s*/)[0].trim()}
+                      </span>
+                      <span className="font-mono text-[10px] text-muted-foreground text-right">
+                        —
+                      </span>
+                      <span className="font-mono text-xs text-primary font-semibold text-right leading-tight">
+                        {entry.date.split(/\s*[–\-]\s*/)[1].trim()}
+                      </span>
+                    </>
+                  ) : (
+                    <span className="font-mono text-xs text-primary font-semibold text-right leading-tight">
+                      {entry.date}
+                    </span>
+                  )}
+                </>
+              )}
+            </div>
+
+            {/* Centre column — timeline line + dot */}
+            <div className="relative flex flex-col items-center">
               <div
-                className="absolute -left-8 md:-left-10 top-1.5 w-[9px] h-[9px] rounded-full bg-primary border-2 border-background"
+                className="w-[9px] h-[9px] rounded-full bg-primary border-2 border-background shrink-0 mt-1.5 z-10"
                 style={{ boxShadow: "0 0 8px oklch(var(--primary) / 0.5)" }}
               />
+              {/* Vertical line — hide on last entry */}
+              {idx < entries.length - 1 && (
+                <div className="flex-1 w-px timeline-line mt-1" />
+              )}
+            </div>
 
-              <div className="border border-border/50 rounded-lg p-6 bg-card/40 hover:border-primary/40 hover:bg-card/60 transition-all duration-300">
-                <div
-                  className="text-lg font-bold mb-1"
-                  style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }}
-                >
-                  {entry.role}
-                </div>
+            {/* Right column — card */}
+            <div className="border border-border/50 rounded-lg p-5 bg-card/40 hover:border-primary/40 hover:bg-card/60 transition-all duration-300 mb-2">
+              <div
+                className="text-base font-bold mb-1 leading-snug"
+                style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }}
+              >
+                {entry.role}
+              </div>
 
-                <div className="flex flex-wrap items-center gap-3 mb-4">
-                  {entry.company && (
-                    <span
-                      className="font-mono text-sm font-medium"
-                      style={{ color: "oklch(var(--accent))" }}
-                    >
-                      {entry.company}
-                    </span>
-                  )}
-                  {entry.meta && (
-                    <span className="font-mono text-xs text-muted-foreground border border-border/60 px-2 py-0.5 rounded">
-                      {entry.meta}
-                    </span>
-                  )}
-                </div>
-
-                {entry.bullets.length > 0 && (
-                  <ul className="space-y-1.5">
-                    {entry.bullets.map((bullet) => (
-                      <li
-                        key={`${entry.role}-${bullet.slice(0, 40)}`}
-                        className="flex gap-2 items-start text-sm text-muted-foreground"
-                      >
-                        <span className="text-primary mt-0.5 shrink-0 text-xs">
-                          \u25b8
-                        </span>
-                        <span>{bullet}</span>
-                      </li>
-                    ))}
-                  </ul>
+              <div className="flex flex-wrap items-center gap-2 mb-3">
+                {entry.company && (
+                  <span
+                    className="font-mono text-sm font-medium"
+                    style={{ color: "oklch(var(--accent))" }}
+                  >
+                    {entry.company}
+                  </span>
+                )}
+                {entry.meta && (
+                  <span className="font-mono text-xs text-muted-foreground border border-border/60 px-2 py-0.5 rounded">
+                    {entry.meta}
+                  </span>
                 )}
               </div>
+
+              {entry.bullets.length > 0 && (
+                <ul className="space-y-1.5">
+                  {entry.bullets.map((bullet) => (
+                    <li
+                      key={`${entry.role}-${bullet.slice(0, 40)}`}
+                      className="flex gap-2 items-start text-sm text-muted-foreground"
+                    >
+                      <span className="text-primary mt-0.5 shrink-0 text-xs">
+                        {'\u25b8'}
+                      </span>
+                      <span>{bullet}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
     </SectionWrapper>
   );
