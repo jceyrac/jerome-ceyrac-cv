@@ -92,15 +92,7 @@ export function HeroSection() {
             {/* Decorative ring */}
             <div className="absolute -inset-3 rounded-full border border-primary/20 animate-glow pointer-events-none" />
           </div>
-        </div>
-
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted-foreground/40">
-          <div className="w-px h-12 bg-gradient-to-b from-transparent to-primary/40" />
-          <span className="font-mono text-[10px] tracking-widest uppercase">
-            scroll
-          </span>
-        </div>
+        </div>        
       </div>
     </section>
   );

@@ -57,7 +57,8 @@ export const mockBackend: backendInterface = {
     `- **Solidity Smart Contract Development** – Cyfrin Updraft - 2025 \n- **Machine Learning Specialization** – DeepLearning.AI / Stanford University - 2024\n- **UX Design Specialization** – Google - 2024\n- **Drone Pilote** – 2023\n- **Scrum Master** – 2010`,
 
   getEducation: async () =>
-    `### 2005 | Engineering Degree – Computer Science\n**EPF - Ecole d’ingénieurs** – Paris, France`,
+    `**Engineering Degree – Computer Science** - EPF-Ecole d’ingénieurs – Paris, France - 2005\n\n **Scientific Baccalaureate
+(' A' Levels)** - Lille, France - 2000`,
 
   getProjects: async () =>
     `## Projects\n\n### Cloud Assembly Factory\nCloud Service Center providing Azure infrastructure as a service for Vaudoise Assurances digital products.\n\n### GoldDAO Governance\nActive contributor to ICP GoldDAO governance on the Internet Computer Protocol.\n\n### Web3 Smart Contracts\nSolidity smart contracts via the Cyfrin Updraft certification program.\n\n### This CV Website\nBuilt on the Internet Computer using Motoko backend and React frontend. All content stored on-chain.`,

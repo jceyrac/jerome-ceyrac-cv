@@ -14,14 +14,14 @@ export function CertificationsSection({
     <>
       <SectionWrapper id="certifications" ocid="section.certifications">
         <SectionLabel>Certifications & Trainings</SectionLabel>
-        <div className="reveal cv-prose text-muted-foreground space-y-4 text-sm leading-relaxed">
+        <div className="reveal cv-prose text-muted-foreground space-y-4 text-base leading-relaxed">
           {certContent}
         </div>
       </SectionWrapper>
 
       <SectionWrapper id="education" ocid="section.education">
         <SectionLabel>Education</SectionLabel>
-        <div className="reveal cv-prose text-muted-foreground space-y-4 text-sm leading-relaxed">
+        <div className="reveal cv-prose text-muted-foreground space-y-4 text-base leading-relaxed">
           {eduContent}
         </div>
       </SectionWrapper>

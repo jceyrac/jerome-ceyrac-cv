@@ -1,5 +1,8 @@
-import { Github, Linkedin, Mail, Send } from "lucide-react";
+import { useEffect } from "react";
+import { Github, Linkedin, Mail, Send, CalendarDays } from "lucide-react";
 import { SectionLabel, SectionWrapper } from "./SectionWrapper";
+
+const CALENDLY_URL = "https://calendly.com/jceyrac-xrk";
 
 const contacts = [
   {
@@ -32,6 +35,32 @@ const contacts = [
 ];
 
 export function ContactSection() {
+  useEffect(() => {
+    // Inject Calendly widget script once
+    if (document.getElementById("calendly-script")) return;
+    const script = document.createElement("script");
+    script.id = "calendly-script";
+    script.src = "https://assets.calendly.com/assets/external/widget.js";
+    script.async = true;
+    document.head.appendChild(script);
+
+    // Inject Calendly CSS
+    if (document.getElementById("calendly-css")) return;
+    const link = document.createElement("link");
+    link.id = "calendly-css";
+    link.rel = "stylesheet";
+    link.href = "https://assets.calendly.com/assets/external/widget.css";
+    document.head.appendChild(link);
+  }, []);
+
+  const openCalendly = () => {
+    // @ts-ignore — Calendly is loaded via external script
+    if (window.Calendly) {
+      // @ts-ignore
+      window.Calendly.initPopupWidget({ url: CALENDLY_URL });
+    }
+  };
+
   return (
     <SectionWrapper id="contact" ocid="section.contact">
       <SectionLabel>Contact</SectionLabel>
@@ -58,6 +87,24 @@ export function ContactSection() {
               </div>
             </a>
           ))}
+
+          {/* Calendly book a call button */}
+          <button
+            onClick={openCalendly}
+            className="w-full flex items-center gap-4 p-4 rounded-lg border border-primary/40 bg-primary/10 hover:border-primary/70 hover:bg-primary/20 transition-all group"
+          >
+            <div className="w-9 h-9 rounded-full bg-primary/20 flex items-center justify-center text-primary group-hover:bg-primary/30 transition-colors shrink-0">
+              <CalendarDays size={15} />
+            </div>
+            <div className="text-left">
+              <div className="font-mono text-xs text-muted-foreground uppercase tracking-widest mb-0.5">
+                Calendly
+              </div>
+              <div className="text-sm font-medium text-primary">
+                Book a call
+              </div>
+            </div>
+          </button>
         </div>
 
         {/* Right column message */}
