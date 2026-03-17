@@ -13,7 +13,7 @@ export function CertificationsSection({
   return (
     <>
       <SectionWrapper id="certifications" ocid="section.certifications">
-        <SectionLabel>Certifications</SectionLabel>
+        <SectionLabel>Certifications & Trainings</SectionLabel>
         <div className="reveal cv-prose text-muted-foreground space-y-4 text-sm leading-relaxed">
           {certContent}
         </div>

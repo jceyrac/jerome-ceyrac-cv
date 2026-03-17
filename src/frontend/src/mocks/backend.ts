@@ -51,13 +51,13 @@ export const mockBackend: backendInterface = {
 - Progressed from developer and release manager to business analyst and project manager, delivering loan and payment applications for Société Générale, Crédit du Nord and Banque Populaire`,
 
   getSkills: async () =>
-    `## Skills\n\n### Product Management\nProduct Strategy · Roadmapping · Agile/Scrum · OKRs · User Research · API Product Management · B2B/B2C · Stakeholder Management\n\n### Development\nSolidity · Motoko · Python · Java · React · TypeScript · REST APIs · Cloud (Azure)\n\n### AI & Data\nMachine Learning · Neural Networks · Deep Learning · LLMs · Data Analysis\n\n### Tools\nJira · Confluence · Figma · GitHub · VS Code · dfx`,
+    `## Skills\n\n### Product Management\nProduct Strategy, Roadmapping, Agile/Scrum, OKRs, User Research, API Product Management, B2B/B2C, Stakeholder Management\n\n### Development\nSolidity, Motoko, Python, Java, React, TypeScript, REST APIs, Cloud (Azure)\n\n### AI & Data\nMachine Learning, Neural Networks, Deep Learning, LLMs, Data Analysis\n\n### Tools\nJira, Confluence, Figma, GitHub, VS Code, dfx`,
 
   getCertifications: async () =>
-    `- **Solidity Smart Contract Development** – Cyfrin Updraft\n- **Machine Learning Specialization** – DeepLearning.AI / Stanford University\n- **Deep Learning Specialization** – DeepLearning.AI\n- **ICP Developer** – DFINITY Foundation`,
+    `- **Solidity Smart Contract Development** – Cyfrin Updraft - 2025 \n- **Machine Learning Specialization** – DeepLearning.AI / Stanford University - 2024\n- **UX Design Specialization** – Google - 2024\n- **Drone Pilote** – 2023\n- **Scrum Master** – 2010`,
 
   getEducation: async () =>
-    `## Education\n\n### 2003 – 2006 | Engineering Degree – Computer Science\n**ESIEA** – Paris, France\n\n### 2001 – 2003 | DUT Informatique\n**IUT de Cachan** – Cachan, France`,
+    `### 2005 | Engineering Degree – Computer Science\n**EPF - Ecole d’ingénieurs** – Paris, France`,
 
   getProjects: async () =>
     `## Projects\n\n### Cloud Assembly Factory\nCloud Service Center providing Azure infrastructure as a service for Vaudoise Assurances digital products.\n\n### GoldDAO Governance\nActive contributor to ICP GoldDAO governance on the Internet Computer Protocol.\n\n### Web3 Smart Contracts\nSolidity smart contracts via the Cyfrin Updraft certification program.\n\n### This CV Website\nBuilt on the Internet Computer using Motoko backend and React frontend. All content stored on-chain.`,

@@ -27,7 +27,7 @@ function parseSkills(md: string): SkillGroup[] {
         .trim();
       if (raw) {
         const parts = raw
-          .split(/,|\u00b7|\u2022/)
+          .split(",")
           .map((s) => s.trim())
           .filter(Boolean);
         current.skills.push(...parts);
@@ -56,7 +56,10 @@ export function SkillsSection({ markdown }: SkillsSectionProps) {
             </div>
             <div className="flex flex-wrap gap-2">
               {group.skills.map((skill) => (
-                <span key={`${group.category}-${skill}`} className="skill-pill">
+                <span
+                  key={`${group.category}-${skill}`}
+                  className="font-mono text-xs text-primary border border-primary/70 px-3 py-1 rounded-full hover:bg-primary/10 transition-colors"
+                >
                   {skill}
                 </span>
               ))}

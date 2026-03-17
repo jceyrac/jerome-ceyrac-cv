@@ -232,18 +232,6 @@ body {
   text-shadow: 0 0 32px oklch(var(--primary) / 0.5);
 }
 
-/* ===== SKILL PILL ===== */
-.skill-pill {
-  background: oklch(var(--primary) / 0.12);
-  border: 1px solid oklch(var(--primary) / 0.3);
-  color: oklch(var(--primary));
-  font-family: "Geist Mono", monospace;
-  font-size: 0.72rem;
-  padding: 0.2rem 0.65rem;
-  border-radius: 9999px;
-  transition: background 0.2s, border-color 0.2s;
-  display: inline-block;
-}
 
 .skill-pill:hover {
   background: oklch(var(--primary) / 0.22);

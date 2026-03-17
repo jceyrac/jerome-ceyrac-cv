@@ -82,7 +82,7 @@ export function renderMarkdown(md: string): ReactNode {
         const idx = listIdx++;
         items.push(
           <li key={`li-${key}-${idx}`} className="flex gap-2 items-start">
-            <span className="text-primary mt-0.5 shrink-0">{'\u25b8'}</span>
+            <span className="text-primary mt-0.5 shrink-0">▸</span>
             <span>{parseInline(lines[i].replace(/^[-*]\s/, ""))}</span>
           </li>,
         );

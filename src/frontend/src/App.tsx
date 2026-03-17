@@ -5,8 +5,8 @@ import { ContactSection } from "./components/ContactSection";
 import { ExperienceSection } from "./components/ExperienceSection";
 import { Footer } from "./components/Footer";
 import { HeroSection } from "./components/HeroSection";
+import { LanguagesSection } from "./components/LanguagesSection";
 import { Navbar } from "./components/Navbar";
-import { ProjectsSection } from "./components/ProjectsSection";
 import { SkeletonLoader } from "./components/SkeletonLoader";
 import { SkillsSection } from "./components/SkillsSection";
 import { useCVData } from "./hooks/useQueries";
@@ -57,7 +57,7 @@ function App() {
           certContent={renderMarkdown(cv.certifications || "")}
           eduContent={renderMarkdown(cv.education || "")}
         />
-        <ProjectsSection content={renderMarkdown(cv.projects || "")} />
+        <LanguagesSection />
         <ContactSection />
       </main>
 

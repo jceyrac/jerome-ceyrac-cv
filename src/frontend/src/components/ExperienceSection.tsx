@@ -32,7 +32,6 @@ function parseExperience(md: string): ExperienceEntry[] {
     if (h3) {
       flush();
       const full = h3[1].trim();
-      // Extract date after · separator, e.g. "Product Owner · Apr 2024 – Now"
       const dotSplit = full.match(/^(.+?)\s*[·•]\s*(.+)$/);
       if (dotSplit) {
         current = { role: dotSplit[1].trim(), date: dotSplit[2].trim() };
@@ -58,9 +57,7 @@ function parseExperience(md: string): ExperienceEntry[] {
       continue;
     }
 
-    const companySimple = line.match(
-      /^([^\u2713\n]+?)\s*[-\u2013\u2014]\s*(.+)$/,
-    );
+    const companySimple = line.match(/^([^\u2713\n]+?)\s*[-\u2013\u2014]\s*(.+)$/);
     if (
       companySimple &&
       !current.company &&
@@ -103,65 +100,42 @@ export function ExperienceSection({ markdown }: ExperienceSectionProps) {
     <SectionWrapper id="experience" ocid="section.experience">
       <SectionLabel>Experience</SectionLabel>
 
-      <div className="relative">
-        {entries.map((entry, idx) => (
+      <div className="relative pl-6">
+        {/* Continuous vertical line behind all entries */}
+        <div className="absolute left-[3px] top-2 bottom-2 w-px timeline-line" />
+
+        {entries.map((entry) => (
           <div
             key={`${entry.role}-${entry.company}`}
-            className="reveal relative grid grid-cols-[140px_1px_1fr] md:grid-cols-[180px_1px_1fr] gap-x-6 mb-10 last:mb-0"
+            className="reveal relative mb-10 last:mb-0"
           >
-            {/* Left column — date */}
-            <div className="flex flex-col items-end justify-start pt-1 gap-1">
-              {entry.date && (
-                <>
-                  {/* Split date into parts if it contains a dash/en-dash */}
-                  {entry.date.split(/\s*[–\-]\s*/).length === 2 ? (
-                    <>
-                      <span className="font-mono text-xs text-primary font-semibold text-right leading-tight">
-                        {entry.date.split(/\s*[–\-]\s*/)[0].trim()}
-                      </span>
-                      <span className="font-mono text-[10px] text-muted-foreground text-right">
-                        —
-                      </span>
-                      <span className="font-mono text-xs text-primary font-semibold text-right leading-tight">
-                        {entry.date.split(/\s*[–\-]\s*/)[1].trim()}
-                      </span>
-                    </>
-                  ) : (
-                    <span className="font-mono text-xs text-primary font-semibold text-right leading-tight">
-                      {entry.date}
-                    </span>
-                  )}
-                </>
-              )}
-            </div>
-
-            {/* Centre column — timeline line + dot */}
-            <div className="relative flex flex-col items-center">
+            {/* Dot + date row */}
+            <div className="flex items-center gap-3 mb-3">
               <div
-                className="w-[9px] h-[9px] rounded-full bg-primary border-2 border-background shrink-0 mt-1.5 z-10"
+                className="absolute -left-6 w-[9px] h-[9px] rounded-full bg-primary border-2 border-background shrink-0 z-10"
                 style={{ boxShadow: "0 0 8px oklch(var(--primary) / 0.5)" }}
               />
-              {/* Vertical line — hide on last entry */}
-              {idx < entries.length - 1 && (
-                <div className="flex-1 w-px timeline-line mt-1" />
+              {entry.date && (
+                <span className="text-sm text-muted-foreground font-mono">
+                  {entry.date}
+                </span>
               )}
             </div>
 
-            {/* Right column — card */}
-            <div className="border border-border/50 rounded-lg p-5 bg-card/40 hover:border-primary/40 hover:bg-card/60 transition-all duration-300 mb-2">
+            {/* Card */}
+            <div className="border border-border/50 rounded-lg p-5 bg-card/40 hover:border-primary/40 hover:bg-card/60 transition-all duration-300">
+              {/* Role title */}
               <div
-                className="text-base font-bold mb-1 leading-snug"
+                className="text-base font-bold mb-2 leading-snug text-foreground"
                 style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }}
               >
                 {entry.role}
               </div>
 
+              {/* Company + location */}
               <div className="flex flex-wrap items-center gap-2 mb-3">
                 {entry.company && (
-                  <span
-                    className="font-mono text-sm font-medium"
-                    style={{ color: "oklch(var(--accent))" }}
-                  >
+                  <span className="text-sm font-semibold text-foreground">
                     {entry.company}
                   </span>
                 )}
@@ -172,6 +146,7 @@ export function ExperienceSection({ markdown }: ExperienceSectionProps) {
                 )}
               </div>
 
+              {/* Bullets */}
               {entry.bullets.length > 0 && (
                 <ul className="space-y-1.5">
                   {entry.bullets.map((bullet) => (
@@ -180,7 +155,7 @@ export function ExperienceSection({ markdown }: ExperienceSectionProps) {
                       className="flex gap-2 items-start text-sm text-muted-foreground"
                     >
                       <span className="text-primary mt-0.5 shrink-0 text-xs">
-                        {'\u25b8'}
+                        {"\u25b8"}
                       </span>
                       <span>{bullet}</span>
                     </li>
